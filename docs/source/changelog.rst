@@ -7,6 +7,9 @@ release, see :doc:`upgrade-notes`.
 Unreleased
 ----------
 
+* Standardised CorDapp version identifiers in jar manifests (aligned with associated cordapp Gradle plugin changes).
+  Updated all samples to reflect new conventions.
+
 * Automatic Constraints propagation for hash-constrained states to signature-constrained states.
   This allows Corda 4 signed CorDapps using signature constraints to consume existing hash constrained states generated
   by unsigned CorDapps in previous versions of Corda.
