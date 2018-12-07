@@ -1,6 +1,5 @@
-package net.corda.node.internal.cordapp
+package net.corda.core.internal.cordapp
 
-import net.corda.core.internal.cordapp.*
 import net.corda.core.utilities.loggerFor
 import java.util.jar.Attributes
 import java.util.jar.Manifest
@@ -22,6 +21,7 @@ fun createTestManifest(name: String, version: String, vendor: String, licence: S
     manifest[CORDAPP_WORKFLOW_LICENCE] = licence
 
     manifest[TARGET_PLATFORM_VERSION] = targetVersion.toString()
+    manifest[MIN_PLATFORM_VERSION] = "1"
 
     return manifest
 }
@@ -31,6 +31,12 @@ operator fun Manifest.set(key: String, value: String): String? {
 }
 
 operator fun Manifest.get(key: String): String? = mainAttributes.getValue(key)
+
+val Manifest.targetPlatformVersion: Int
+    get() {
+        val minPlatformVersion = mainAttributes.getValue(MIN_PLATFORM_VERSION)?.toInt() ?: 1
+        return mainAttributes.getValue(TARGET_PLATFORM_VERSION)?.toInt() ?: minPlatformVersion
+    }
 
 fun Manifest.toCordappInfo(defaultName: String): CordappInfo {
 
